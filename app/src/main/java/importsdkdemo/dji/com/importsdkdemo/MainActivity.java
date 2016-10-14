@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import dji.sdk.sdkmanager.DJISDKManager;
 import dji.sdk.base.DJIBaseComponent;
@@ -22,6 +25,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //UI
+        final TextView textview=(TextView)findViewById(R.id.textView);
+        final Button startgame=(Button) findViewById(R.id.button);
+        textview.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){//替换为连接触发
+                textview.setText("已连接");
+                startgame.setVisibility(View.VISIBLE);
+            }
+
+        });
+        startgame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+                startActivity(intent);
+                //setContentView(R.layout.activity_game);
+                //调用摄像头
+            }
+
+        });
         //Initialize DJI SDK Manager
         mHandler = new Handler(Looper.getMainLooper());
         DJISDKManager.getInstance().initSDKManager(this, mDJISDKManagerCallback);
